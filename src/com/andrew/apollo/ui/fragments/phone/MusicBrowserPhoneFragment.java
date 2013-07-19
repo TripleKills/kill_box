@@ -134,6 +134,7 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
         // ad by qy
         mActionBar = getSherlockActivity().getSupportActionBar();
         mActionBar.setDisplayShowTitleEnabled(false);
+
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		String[] titles = new String[mPagerAdapter.getCount()];
 		for (int i = 0; i < mPagerAdapter.getCount(); i++) {
@@ -170,7 +171,6 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
-		
         return rootView;
     }
 
@@ -248,8 +248,8 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
                 // Toggle the current track as a favorite and update the menu
                 // item
                 MusicUtils.toggleFavorite();
-                //rm by qy 
-                //getSherlockActivity().invalidateOptionsMenu(); 
+                
+                getSherlockActivity().invalidateOptionsMenu(); 
                 return true;
             case R.id.menu_sort_by_az:
                 if (isArtistPage()) {
