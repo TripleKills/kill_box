@@ -17,7 +17,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -67,6 +71,9 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
     private ThemeUtils mResources;
 
     private PreferenceUtils mPreferences;
+    
+    //add by qy
+    private ActionBar mActionBar;
 
     /**
      * Empty constructor as per the {@link Fragment} documentation
@@ -82,6 +89,7 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
         super.onCreate(savedInstanceState);
         // Get the preferences
         mPreferences = PreferenceUtils.getInstace(getSherlockActivity());
+        
     }
 
     /**
@@ -117,6 +125,27 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
         pageIndicator.setViewPager(mViewPager);
         // Scroll to the current artist, album, or song
         pageIndicator.setOnCenterItemClickListener(this);
+        
+        // ad by qy
+        mActionBar = getSherlockActivity().getSupportActionBar();
+        mActionBar.setDisplayShowTitleEnabled(false);
+		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		String[] titles = new String[mPagerAdapter.getCount()];
+		for (int i = 0; i < mPagerAdapter.getCount(); i++) {
+			titles[i] = mPagerAdapter.getPageTitle(i).toString();
+		}
+		SpinnerAdapter adapter = new ArrayAdapter<String>(
+				mActionBar.getThemedContext(),
+				R.layout.sherlock_spinner_dropdown_item, titles);
+		mActionBar.setListNavigationCallbacks(adapter, new OnNavigationListener() {
+			
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				mViewPager.setCurrentItem(itemPosition);
+				return false;
+			}
+		});
+		
         return rootView;
     }
 
@@ -189,7 +218,8 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
                 // Toggle the current track as a favorite and update the menu
                 // item
                 MusicUtils.toggleFavorite();
-                getSherlockActivity().invalidateOptionsMenu();
+                //rm by qy 
+                //getSherlockActivity().invalidateOptionsMenu(); 
                 return true;
             case R.id.menu_sort_by_az:
                 if (isArtistPage()) {
