@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -33,14 +34,15 @@ import com.andrew.apollo.adapters.PagerAdapter.MusicFragments;
 import com.andrew.apollo.ui.fragments.AlbumFragment;
 import com.andrew.apollo.ui.fragments.ArtistFragment;
 import com.andrew.apollo.ui.fragments.SongFragment;
+import com.andrew.apollo.umeng.SlideMenuUtil;
 import com.andrew.apollo.utils.MusicUtils;
 import com.andrew.apollo.utils.NavUtils;
 import com.andrew.apollo.utils.PreferenceUtils;
 import com.andrew.apollo.utils.SortOrder;
 import com.andrew.apollo.utils.ThemeUtils;
+import com.umeng.fb.FeedbackAgent;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.OnCenterItemClickListener;
-import com.xhdq.xhdq.NavigationActivity;
 import com.xhdq.xhdq.SlideMenu;
 
 /**
@@ -184,10 +186,16 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
 		    	}
 		    	@Override
 		    	public void fillContent(View menu) {
-		    		
+		    		LinearLayout menu_content = (LinearLayout) menu.findViewById(R.id.menu_content);
+		    		System.out.println("use activity=>" + getActivity());
+		    		System.out.println("use activity fragment=>" + getSherlockActivity());
+		    		menu_content.addView(SlideMenuUtil.getSlideView(getActivity(), this));
 		    	}
 		    };
 		    slidemenu.checkEnabled();
+		//umeng
+		FeedbackAgent agent = new FeedbackAgent(getSherlockActivity());
+	    agent.sync();
 		    
         return rootView;
     }

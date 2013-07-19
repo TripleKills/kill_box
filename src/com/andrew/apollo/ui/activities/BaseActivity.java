@@ -48,6 +48,7 @@ import com.andrew.apollo.utils.ThemeUtils;
 import com.andrew.apollo.widgets.PlayPauseButton;
 import com.andrew.apollo.widgets.RepeatButton;
 import com.andrew.apollo.widgets.ShuffleButton;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -243,6 +244,9 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements S
         updatePlaybackControls();
         // Current info
         updateBottomActionBarInfo();
+        
+        //ad by qy
+        MobclickAgent.onResume(this);
     }
 
     /**
@@ -277,6 +281,9 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements S
                 MusicUtils.startBackgroundService(this);
             }
         }
+        
+        // add by qy
+        MobclickAgent.onPause(this);
     }
 
     /**

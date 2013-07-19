@@ -18,9 +18,13 @@ import android.os.StrictMode;
 
 import com.andrew.apollo.cache.ImageCache;
 import com.andrew.apollo.utils.ApolloUtils;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.analytics.onlineconfig.UmengOnlineConfigureListener;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.json.JSONObject;
 
 /**
  * Used to turn off logging for jaudiotagger and free up memory when
@@ -41,6 +45,20 @@ public class ApolloApplication extends Application {
         enableStrictMode();
         // Turn off logging for jaudiotagger.
         Logger.getLogger("org.jaudiotagger").setLevel(Level.OFF);
+        
+        //ad by qy
+        MobclickAgent.setDebugMode(true);
+		MobclickAgent.updateOnlineConfig(this);
+		MobclickAgent.setOnlineConfigureListener(new UmengOnlineConfigureListener(){
+		      @Override
+		      public void onDataReceived(JSONObject data) {
+		    	String be_open =  MobclickAgent.getConfigParams(getApplicationContext(), "be_open");
+		    	if (be_open.equalsIgnoreCase("true")) {
+		    		// open be
+		    		
+		    	}
+		      }
+		});
     }
 
     /**

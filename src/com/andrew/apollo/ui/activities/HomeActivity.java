@@ -33,6 +33,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Load the music browser fragment
+        System.out.println("HomeActivity=>" + this);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.activity_base_content, new MusicBrowserPhoneFragment()).commit();
