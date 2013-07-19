@@ -13,10 +13,15 @@ package com.andrew.apollo.ui.fragments.phone;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerTabStrip;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
@@ -145,6 +150,26 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
 				return false;
 			}
 		});
+		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int arg0) {
+				pageIndicator.setCurrentItem(arg0);
+				mActionBar.setSelectedNavigationItem(arg0);
+				if (arg0 > 0) {
+					mActionBar.setDisplayHomeAsUpEnabled(true);
+				} else
+					mActionBar.setDisplayHomeAsUpEnabled(false);
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+			}
+		});
 		
         return rootView;
     }
@@ -210,6 +235,11 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
+        	//add by qy
+        	case android.R.id.home:
+        		mViewPager.setCurrentItem(0);
+        	break;
+        	
             case R.id.menu_shuffle:
                 // Shuffle all the songs
                 MusicUtils.shuffleAll(getSherlockActivity());
