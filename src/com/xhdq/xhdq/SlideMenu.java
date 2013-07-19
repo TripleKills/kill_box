@@ -27,7 +27,7 @@ public class SlideMenu {
 	private final int MENU_WIDTH = 230;
 	private static final int ANIM_SPEED = 300;
 
-	SlideMenu(Activity act) {
+	public SlideMenu(Activity act) {
 		this.act = act;
 	}
 

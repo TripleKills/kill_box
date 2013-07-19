@@ -13,15 +13,11 @@ package com.andrew.apollo.ui.fragments.phone;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
@@ -44,6 +40,8 @@ import com.andrew.apollo.utils.SortOrder;
 import com.andrew.apollo.utils.ThemeUtils;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.OnCenterItemClickListener;
+import com.xhdq.xhdq.NavigationActivity;
+import com.xhdq.xhdq.SlideMenu;
 
 /**
  * This class is used to hold the {@link ViewPager} used for swiping between the
@@ -79,6 +77,7 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
     
     //add by qy
     private ActionBar mActionBar;
+    private SlideMenu slidemenu;
 
     /**
      * Empty constructor as per the {@link Fragment} documentation
@@ -171,6 +170,25 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
+		 slidemenu = new SlideMenu(getActivity()){
+		    	@Override
+		    	public void show() {
+		    		
+		    		super.show();
+		    	}
+		    	
+		    	@Override
+		    	public void hide() {
+		    		
+		    		super.hide();
+		    	}
+		    	@Override
+		    	public void fillContent(View menu) {
+		    		
+		    	}
+		    };
+		    slidemenu.checkEnabled();
+		    
         return rootView;
     }
 
@@ -211,10 +229,15 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        
         // Favorite action
         inflater.inflate(R.menu.favorite, menu);
         // Shuffle all
         inflater.inflate(R.menu.shuffle, menu);
+        
+        //slide menu add by qy
+        inflater.inflate(R.menu.slide, menu);
+        
         // Sort orders
         if (isRecentPage()) {
             inflater.inflate(R.menu.view_as, menu);
@@ -227,6 +250,8 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
         } else if (isSongPage()) {
             inflater.inflate(R.menu.song_sort_by, menu);
         }
+        
+      
     }
 
     /**
@@ -234,11 +259,18 @@ public class MusicBrowserPhoneFragment extends SherlockFragment implements
      */
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
+    	
         switch (item.getItemId()) {
         	//add by qy
         	case android.R.id.home:
         		mViewPager.setCurrentItem(0);
         	break;
+        	case R.id.slide_menu:
+        		if(slidemenu.isShow())
+     				slidemenu.hide();
+     			else
+     				slidemenu.show();
+        		break;
         	
             case R.id.menu_shuffle:
                 // Shuffle all the songs
