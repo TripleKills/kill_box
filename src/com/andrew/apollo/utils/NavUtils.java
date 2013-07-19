@@ -27,7 +27,7 @@ import com.andrew.apollo.ui.activities.HomeActivity;
 import com.andrew.apollo.ui.activities.ProfileActivity;
 import com.andrew.apollo.ui.activities.SearchActivity;
 import com.andrew.apollo.ui.activities.SettingsActivity;
-import com.devspark.appmsg.Crouton;
+import com.devspark.appmsg.*;
 
 /**
  * Various navigation helpers.
@@ -94,8 +94,8 @@ public final class NavUtils {
             // Make sure the notification starts
             MusicUtils.startBackgroundService(context);
         } catch (final ActivityNotFoundException e) {
-            Crouton.makeText(context, context.getString(R.string.no_effects_for_you),
-                    Crouton.STYLE_ALERT);
+            AppMsg.makeText(context, context.getString(R.string.no_effects_for_you),
+                    AppMsg.STYLE_ALERT);
         }
     }
 

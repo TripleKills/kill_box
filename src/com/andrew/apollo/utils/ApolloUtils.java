@@ -46,7 +46,7 @@ import com.andrew.apollo.cache.ImageFetcher;
 import com.andrew.apollo.ui.activities.ShortcutActivity;
 import com.andrew.apollo.widgets.ColorPickerView;
 import com.andrew.apollo.widgets.ColorSchemeDialog;
-import com.devspark.appmsg.Crouton;
+import com.devspark.appmsg.*;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -376,16 +376,16 @@ public final class ApolloUtils {
             intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, displayName);
             intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
             context.sendBroadcast(intent);
-            Crouton.makeText(context,
+            AppMsg.makeText(context,
                     displayName + " " + context.getString(R.string.pinned_to_home_screen),
-                    Crouton.STYLE_CONFIRM).show();
+                    AppMsg.STYLE_CONFIRM).show();
         } catch (final Exception e) {
             Log.e("ApolloUtils", "createShortcutIntent - " + e);
-            Crouton.makeText(
+            AppMsg.makeText(
                     context,
                     displayName + " "
                             + context.getString(R.string.could_not_be_pinned_to_home_screen),
-                    Crouton.STYLE_ALERT).show();
+                    AppMsg.STYLE_ALERT).show();
         }
     }
 
